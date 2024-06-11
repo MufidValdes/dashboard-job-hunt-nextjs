@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { FC, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import FieldInput from "@/components/organism/FieldInput";
+import FieldInput from "@/components/organisms/FieldInput";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { JobTypeName } from "@/components/constants";
 import {
@@ -28,9 +28,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import InputSkills from "@/components/organism/InputSkills";
-import CKEditor from "@/components/organism/CKEditor";
-import InputBenefits from "@/components/organism/InputBenefits";
+import InputSkills from "@/components/organisms/InputSkills";
+import CKEditor from "@/components/organisms/CKEditor";
+import InputBenefits from "@/components/organisms/InputBenefits";
 import { Button } from "@/components/ui/button";
 
 interface PostJobPageProps {}
@@ -212,7 +212,7 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
             title="Required Skills"
             subtitle="Add required skills for the job"
           >
-            <InputSkills form={form}/>
+            <InputSkills form={form} name="requiredSkills" label="Add Skills" />
           </FieldInput>
 
           <FieldInput
