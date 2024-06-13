@@ -17,6 +17,7 @@ import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
+import { error } from "console";
 
 interface SignUpPageProps {}
 
@@ -28,8 +29,21 @@ const SignUpPage: FC<SignUpPageProps> = ({}) => {
 	const router = useRouter();
 	const { toast } = useToast();
 
-	const onSubmit = (val: z.infer<typeof signUpFormSchema>) => {
-			console.log(val);
+	const onSubmit = async (val: z.infer<typeof signUpFormSchema>) => {
+		try{
+			await fetch("/api/company/new-user", {
+				method: "POST",
+				headers :{ "Content-Type": "application/json"},
+				body : JSON.stringify(val)
+			});
+			await router.push("/signin");
+		} catch (error) {
+			toast({
+				title: "Error",
+				description: "Please Try Again",
+			});
+			console.log(error);
+		}
 	};
 
 	return (

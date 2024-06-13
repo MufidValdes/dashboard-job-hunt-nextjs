@@ -1,0 +1,109 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String      @id @default(cuid())
+  name      String
+  email     String      @unique
+  password  String
+  Applicant Applicant[]
+}
+
+model Applicant {
+  id               String  @id @default(cuid())
+  jobid            String?
+  userid           String?
+  Job              Job?    @relation(fields: [jobid], references: [id])
+  User             User?   @relation(fields: [userid], references: [id])
+  previousJobTitle String
+  phone            String
+  linkedln         String
+  portofolio       String
+  coverLatter      String
+  resume           String
+}
+
+model CategoryJob {
+  id   String @id @default(cuid())
+  name String
+  Job  Job[]
+}
+
+model Industry {
+  id   String @id @default(cuid())
+  name String
+}
+
+model Company {
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  name               String
+  password           String
+  CompanySocialMedia CompanySocialMedia[]
+  CompanyTeam        CompanyTeam[]
+  CompanyOverview    CompanyOverview[]
+  Job                Job[]
+}
+
+model CompanySocialMedia {
+  id         String   @id @default(cuid())
+  facebook   String
+  instragram String
+  linkedln   String
+  twitter    String
+  youtube    String
+  companyid  String?
+  Company    Company? @relation(fields: [companyid], references: [id])
+}
+
+model CompanyTeam {
+  id         String   @id @default(cuid())
+  name       String
+  position   String
+  instragram String
+  linkedln   String
+  companyid  String?
+  Company    Company? @relation(fields: [companyid], references: [id])
+}
+
+model CompanyOverview {
+  id          String   @id @default(cuid())
+  image       String
+  name        String
+  website     String
+  location    String
+  employee    String
+  industry    String
+  dateFounded String
+  techStack   String
+  description String
+  companyid   String?
+  Company     Company? @relation(fields: [companyid], references: [id])
+}
+
+model Job {
+  id               String       @id @default(cuid())
+  name             String
+  roles            String
+  jobType          String
+  jobSalaryFrom    String
+  jobSalaryTo      String
+  jobCategory      String
+  jobRequiredSkill String
+  jobDescription   String
+  responsibility   String
+  whoYouAre        String
+  niceToHaves      String
+  benefits         String
+  companyid        String?
+  categoryid       String?
+  CategoryJob      CategoryJob? @relation(fields: [categoryid], references: [id])
+  Company          Company?     @relation(fields: [companyid], references: [id])
+  Applicant        Applicant[]
+}
